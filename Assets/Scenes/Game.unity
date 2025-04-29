@@ -766,7 +766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &389798869
 RectTransform:
   m_ObjectHideFlags: 0
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6257862, b: 0.5707547, a: 1}
+  m_Color: {r: 0.65971833, g: 0.8867924, b: 0.6483624, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1154,7 +1154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &629544830
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2071,10 +2071,10 @@ MonoBehaviour:
   gridHeight: 4
   matchDelay: 1
   mismatchDelay: 1
-  cardManager: {fileID: 0}
-  scoreManager: {fileID: 0}
-  audioManager: {fileID: 0}
-  uiManager: {fileID: 0}
+  cardManager: {fileID: 1302615231}
+  scoreManager: {fileID: 1474824810}
+  audioManager: {fileID: 140291308}
+  uiManager: {fileID: 756880394}
 --- !u!1 &1112915124
 GameObject:
   m_ObjectHideFlags: 0
@@ -2645,12 +2645,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2a21c3027cb4d26853d1a5ad3d8aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 0}
+  cardPrefab: {fileID: 8502663947725483890, guid: 625348f27260e4c18a21935ab2a0f0db, type: 3}
   cardContainer: {fileID: 1363290264}
   cardImages: []
   cardBackSprite: {fileID: 0}
-  gridLayout: {fileID: 0}
-  gridRectTransform: {fileID: 0}
+  gridLayout: {fileID: 1363290265}
+  gridRectTransform: {fileID: 1363290264}
   cardAspectRatio: 0.7
   cardSpacing: 10
   edgePadding: 20
