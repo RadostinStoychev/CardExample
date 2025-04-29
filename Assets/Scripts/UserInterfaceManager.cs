@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 public class UserInterfaceManager : MonoBehaviour
 {
     [Header("UI Panels")]
     [SerializeField] private GameObject gameplayPanel;
     [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private GameObject menuPanel;
+    [SerializeField] private GameObject newGamePanel;
     
     [Header("Gameplay UI")]
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -24,11 +23,11 @@ public class UserInterfaceManager : MonoBehaviour
     [SerializeField] private Button restartButton;
     [SerializeField] private Button menuButton;
     
-    [Header("Menu UI")]
+    [Header("New Game UI")]
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button quitButton;
-    [SerializeField] private Dropdown gridSizeDropdown;
+    [SerializeField] private TMP_Dropdown gridSizeDropdown;
     [SerializeField] private Toggle soundToggle;
     
     [Header("References")]
@@ -99,14 +98,14 @@ public class UserInterfaceManager : MonoBehaviour
     {
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
-        menuPanel.SetActive(false);
+        newGamePanel.SetActive(false);
     }
     
     public void ShowGameOverUI(int finalScore, int totalMoves)
     {
         gameplayPanel.SetActive(false);
         gameOverPanel.SetActive(true);
-        menuPanel.SetActive(false);
+        newGamePanel.SetActive(false);
         
         finalScoreText.text = $"Final Score: {finalScore}";
         finalMovesText.text = $"Total Moves: {totalMoves}";
@@ -114,12 +113,12 @@ public class UserInterfaceManager : MonoBehaviour
     
     public void ShowMenuPanel()
     {
-        menuPanel.SetActive(true);
+        newGamePanel.SetActive(true);
     }
     
     public void HideMenuPanel()
     {
-        menuPanel.SetActive(false);
+        newGamePanel.SetActive(false);
     }
     
     private void UpdateScoreText(int score)
