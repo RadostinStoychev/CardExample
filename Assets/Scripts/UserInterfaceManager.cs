@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +14,7 @@ public class UserInterfaceManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI movesText;
     [SerializeField] private TextMeshProUGUI comboText;
-    [SerializeField] private Button pauseButton;
-    
+
     [Header("Game Over UI")]
     [SerializeField] private TextMeshProUGUI finalScoreText;
     [SerializeField] private TextMeshProUGUI finalMovesText;
@@ -28,8 +26,7 @@ public class UserInterfaceManager : MonoBehaviour
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private TMP_Dropdown gridSizeDropdown;
-    [SerializeField] private Toggle soundToggle;
-    
+
     [Header("References")]
     [SerializeField] private GameManager gameManager;
     [SerializeField] private ScoreManager scoreManager;
@@ -56,7 +53,6 @@ public class UserInterfaceManager : MonoBehaviour
         }
         
         // Set up button listeners
-        if (pauseButton != null) pauseButton.onClick.AddListener(ShowMenuPanel);
         if (resumeButton != null) resumeButton.onClick.AddListener(HideMenuPanel);
         if (restartButton != null) restartButton.onClick.AddListener(RestartGame);
         if (menuButton != null) menuButton.onClick.AddListener(ShowMenuPanel);
@@ -65,14 +61,7 @@ public class UserInterfaceManager : MonoBehaviour
         
         // Set up grid size dropdown
         SetupGridSizeDropdown();
-        
-        // Set up sound toggle
-        if (soundToggle != null)
-        {
-            soundToggle.isOn = audioManager.IsSoundEnabled();
-            soundToggle.onValueChanged.AddListener(ToggleSound);
-        }
-        
+
         // Show gameplay UI by default
         ShowGameplayUI();
     }
@@ -176,12 +165,7 @@ public class UserInterfaceManager : MonoBehaviour
     {
         gameManager.QuitGame();
     }
-    
-    private void ToggleSound(bool isOn)
-    {
-        audioManager.ToggleSound();
-    }
-    
+
     private void OnDestroy()
     {
         // Remove event listeners
@@ -192,7 +176,6 @@ public class UserInterfaceManager : MonoBehaviour
         }
         
         // Remove button listeners
-        if (pauseButton != null) pauseButton.onClick.RemoveListener(ShowMenuPanel);
         if (resumeButton != null) resumeButton.onClick.RemoveListener(HideMenuPanel);
         if (restartButton != null) restartButton.onClick.RemoveListener(RestartGame);
         if (menuButton != null) menuButton.onClick.RemoveListener(ShowMenuPanel);
@@ -200,6 +183,5 @@ public class UserInterfaceManager : MonoBehaviour
         if (quitButton != null) quitButton.onClick.RemoveListener(QuitGame);
         
         if (gridSizeDropdown != null) gridSizeDropdown.onValueChanged.RemoveListener(ChangeGridSize);
-        if (soundToggle != null) soundToggle.onValueChanged.RemoveListener(ToggleSound);
     }
 }

@@ -529,7 +529,6 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 57615b2e49bd342528393467a22c2a85, type: 3}
     volume: 1
   audioSourcePoolSize: 5
-  soundEnabled: 1
 --- !u!1 &255657702
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,7 +916,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Over
+  m_text: The game ended!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1185,7 +1184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6257862, b: 0.5707547, a: 1}
+  m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1604,7 +1603,6 @@ MonoBehaviour:
   scoreText: {fileID: 1840198177}
   movesText: {fileID: 2091914322}
   comboText: {fileID: 1226870482}
-  pauseButton: {fileID: 0}
   finalScoreText: {fileID: 2070370598}
   finalMovesText: {fileID: 917012528}
   restartButton: {fileID: 2055713271}
@@ -1613,7 +1611,6 @@ MonoBehaviour:
   newGameButton: {fileID: 1401926944}
   quitButton: {fileID: 647997566}
   gridSizeDropdown: {fileID: 1717930493}
-  soundToggle: {fileID: 632091478}
   gameManager: {fileID: 1063958316}
   scoreManager: {fileID: 1474824810}
   audioManager: {fileID: 140291308}
@@ -2650,7 +2647,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 378a5e5cebd4ca24280478e3175b5d7f, type: 3}
   - {fileID: 21300000, guid: 05c440b3a2cf3214fa2bf09facf5f3f6, type: 3}
   - {fileID: 21300000, guid: e9478005077415149b0c709d0b6f28de, type: 3}
-  cardBackSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  cardBackSprite: {fileID: 0}
   gridLayout: {fileID: 1363290265}
   gridRectTransform: {fileID: 1363290264}
   cardAspectRatio: 0.7
@@ -2838,7 +2835,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}

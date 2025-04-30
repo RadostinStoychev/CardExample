@@ -19,10 +19,7 @@ public class AudioManager : MonoBehaviour
     
     [Header("Audio Pool Settings")]
     [SerializeField] private int audioSourcePoolSize = 5;
-    
-    [Header("Settings")]
-    [SerializeField] private bool soundEnabled = true;
-    
+
     // Audio source pool for efficient audio playback
     private List<AudioSource> audioSourcePool = new List<AudioSource>();
     
@@ -30,9 +27,6 @@ public class AudioManager : MonoBehaviour
     {
         // Initialize audio source pool
         InitializeAudioSourcePool();
-        
-        // Load sound preference
-        soundEnabled = PlayerPrefs.GetInt("SoundEnabled", 1) == 1;
     }
     
     private void InitializeAudioSourcePool()
@@ -90,7 +84,7 @@ public class AudioManager : MonoBehaviour
     
     private void PlaySound(Sound sound)
     {
-        if (!soundEnabled || sound == null || sound.clip == null)
+        if (sound == null || sound.clip == null)
             return;
             
         AudioSource audioSource = GetAvailableAudioSource();
@@ -98,21 +92,7 @@ public class AudioManager : MonoBehaviour
         audioSource.volume = sound.volume;
         audioSource.Play();
     }
-    
-    public void ToggleSound()
-    {
-        soundEnabled = !soundEnabled;
-        
-        // Save sound preference
-        PlayerPrefs.SetInt("SoundEnabled", soundEnabled ? 1 : 0);
-        PlayerPrefs.Save();
-    }
-    
-    public bool IsSoundEnabled()
-    {
-        return soundEnabled;
-    }
-    
+
     // Optimize memory on mobile platforms
     public void OptimizeForMobile()
     {

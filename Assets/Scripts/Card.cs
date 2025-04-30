@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -104,11 +103,14 @@ public class Card : MonoBehaviour
             yield return null;
         }
         
+        cardBack.gameObject.SetActive(!isFlipped);
+        cardImage.gameObject.SetActive(isFlipped);
+        
         // Ensure the final rotation is exact
         cardFace.localRotation = targetRotation;
         flipCoroutine = null;
     }
-    
+
     public void SetMatched()
     {
         isMatched = true;
@@ -196,7 +198,6 @@ public class Card : MonoBehaviour
     
     public void Reset()
     {
-        // Method for object pooling to reset the card
         StopAllCoroutines();
         flipCoroutine = null;
         matchCoroutine = null;
