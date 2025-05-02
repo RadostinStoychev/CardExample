@@ -2,15 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class CardState
-{
-    public int Value;
-    public bool IsMatched;
-    public bool IsFlipped;
-    public int SpriteIndex;
-}
-
 public class CardManager : MonoBehaviour
 {
     [Header("Card Settings")]
@@ -22,7 +13,7 @@ public class CardManager : MonoBehaviour
     [Header("Layout Settings")]
     [SerializeField] private GridLayoutGroup gridLayout;
     [SerializeField] private RectTransform gridRectTransform;
-    [SerializeField] private float cardAspectRatio = 0.7f; // Width / Height
+    [SerializeField] private float cardAspectRatio = 0.7f;
     [SerializeField] private float cardSpacing = 10f;
     [SerializeField] private float edgePadding = 20f;
     
@@ -40,7 +31,6 @@ public class CardManager : MonoBehaviour
     
     private void Awake()
     {
-        // Initialize object pool
         InitializeCardPool();
     }
     
@@ -95,6 +85,7 @@ public class CardManager : MonoBehaviour
         {
             card.gameObject.SetActive(false);
         }
+        
         activeCards.Clear();
     }
     
@@ -175,7 +166,6 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    
     private void SetupGridLayout(int width, int height)
     {
         // Set grid dimensions
@@ -207,16 +197,16 @@ public class CardManager : MonoBehaviour
         gridLayout.padding.top = gridLayout.padding.bottom = Mathf.FloorToInt(edgePadding);
     }
     
+    // Set card properties based on value
     private void SetupCard(Card card, int value)
     {
-        // Set card properties
         int spriteIndex = valueToSpriteIndex[value];
         card.Setup(value, cardImages[spriteIndex], cardBackSprite);
     }
     
+    // Set card properties based on state
     private void SetupCardFromState(Card card, CardState state)
     {
-        // Set card properties using the sprite index stored in the state
         card.Setup(state.Value, cardImages[state.SpriteIndex], cardBackSprite);
     }
     
@@ -305,7 +295,6 @@ public class CardManager : MonoBehaviour
         SetupGridLayout(width, height);
     }
     
-    // Memory optimization when scene changes
     private void OnDestroy()
     {
         valueToSpriteIndex.Clear();

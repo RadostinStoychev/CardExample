@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
     public class Sound
     {
         public AudioClip clip;
+        
         [Range(0f, 1f)]
         public float volume = 1f;
     }
@@ -57,7 +58,7 @@ public class AudioManager : MonoBehaviour
         audioSourcePool.RemoveAt(0);
         audioSourcePool.Add(oldestSource);
         
-        oldestSource.Stop(); // Stop it before reusing
+        oldestSource.Stop();
         return oldestSource;
     }
     
@@ -95,14 +96,14 @@ public class AudioManager : MonoBehaviour
     // Optimize memory on mobile platforms
     public void OptimizeForMobile()
     {
-        #if UNITY_ANDROID || UNITY_IOS
+#if UNITY_ANDROID || UNITY_IOS
         // Reduce buffer size for mobile
         foreach (AudioSource source in audioSourcePool)
         {
             // Lower buffer size to save memory
             AudioSettings.SetDSPBufferSize(512, 2);
         }
-        #endif
+#endif
     }
     
     private void OnDestroy()

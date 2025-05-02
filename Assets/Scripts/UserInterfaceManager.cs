@@ -30,8 +30,7 @@ public class UserInterfaceManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameManager gameManager;
     [SerializeField] private ScoreManager scoreManager;
-    [SerializeField] private AudioManager audioManager;
-    
+
     // Available grid sizes (width, height)
     private readonly (int, int)[] availableGridSizes = new[]
     {
@@ -68,18 +67,20 @@ public class UserInterfaceManager : MonoBehaviour
     
     private void SetupGridSizeDropdown()
     {
-        if (gridSizeDropdown != null)
+        if (gridSizeDropdown == null)
         {
-            gridSizeDropdown.ClearOptions();
-            
-            List<string> options = new List<string>();
-            foreach (var size in availableGridSizes)
-            {
-                options.Add($"{size.Item1}x{size.Item2}");
-            }
-            
-            gridSizeDropdown.AddOptions(options);
+            return;
         }
+        
+        gridSizeDropdown.ClearOptions();
+            
+        List<string> options = new List<string>();
+        foreach (var size in availableGridSizes)
+        {
+            options.Add($"{size.Item1}x{size.Item2}");
+        }
+            
+        gridSizeDropdown.AddOptions(options);
     }
     
     public void ShowGameplayUI()
@@ -99,12 +100,12 @@ public class UserInterfaceManager : MonoBehaviour
         finalMovesText.text = $"Total Moves: {totalMoves}";
     }
     
-    public void ShowMenuPanel()
+    private void ShowMenuPanel()
     {
         newGamePanel.SetActive(true);
     }
     
-    public void HideMenuPanel()
+    private void HideMenuPanel()
     {
         newGamePanel.SetActive(false);
     }

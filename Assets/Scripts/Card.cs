@@ -34,23 +34,28 @@ public class Card : MonoBehaviour
     
     private void Awake()
     {
-        // Cache components
         if (cardButton == null)
+        {
             cardButton = GetComponent<Button>();
-        
+        }
+
         rectTransform = GetComponent<RectTransform>();
+
         if (canvasGroup == null)
+        {
             canvasGroup = GetComponent<CanvasGroup>();
+        }
+
         if (canvasGroup == null)
+        {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
-            
-        // Set button click handler
+        }
+        
         cardButton.onClick.AddListener(OnCardClicked);
     }
     
     public void Setup(int value, Sprite front, Sprite back)
     {
-        // Stop any ongoing animations
         StopAllCoroutines();
         
         cardValue = value;
@@ -111,6 +116,7 @@ public class Card : MonoBehaviour
         flipCoroutine = null;
     }
 
+    // Initiate matching routine with an animation
     public void SetMatched()
     {
         isMatched = true;
@@ -129,6 +135,7 @@ public class Card : MonoBehaviour
         matchCoroutine = StartCoroutine(MatchAnimation());
     }
 
+    // Initiate matching routine with no animation
     public void SetMatchedOnStart()
     {
         isMatched = true;

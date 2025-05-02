@@ -4,7 +4,7 @@ using System;
 
 public class SaveSystem : MonoBehaviour
 {
-    private const string SAVE_FILENAME = "cardsave.json";
+    private const string SAVE_FILENAME = "cardmatching.json";
     private const string PREFS_KEY_HAS_SAVE = "HasCardGameSave";
 
     public static void SaveGame(GameData gameData)
@@ -43,11 +43,9 @@ public class SaveSystem : MonoBehaviour
                 return null;
             }
         }
-        else
-        {
-            Debug.LogWarning("Save file not found");
-            return null;
-        }
+
+        Debug.LogWarning("Save file not found");
+        return null;
     }
     
     public static bool HasSavedGame()
@@ -74,25 +72,4 @@ public class SaveSystem : MonoBehaviour
             }
         }
     }
-}
-
-[Serializable]
-public class GameData
-{
-    public int GridWidth;
-    public int GridHeight;
-    public int RemainingPairs;
-    public int TotalMoves;
-    public int Score;
-    public CardState[] CardStates;
-    
-    // Value-to-sprite mapping record
-    public ValueToSpriteMapping[] SpriteMapping;
-}
-
-[Serializable]
-public class ValueToSpriteMapping
-{
-    public int Value;
-    public int SpriteIndex;
 }

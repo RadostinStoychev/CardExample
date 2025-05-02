@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -63,16 +61,13 @@ public class ScoreManager : MonoBehaviour
         // Calculate score to add
         int scoreToAdd = baseMatchScore;
         
-        // Apply combo multiplier if combo > 0
+        // Apply combo multiplier
         if (currentCombo > 0)
         {
             scoreToAdd *= (1 + currentCombo * comboMultiplier / 10);
         }
         
-        // Add score
         currentScore += scoreToAdd;
-        
-        // Fire events
         OnScoreChanged?.Invoke(currentScore);
         OnComboChanged?.Invoke(currentCombo);
     }

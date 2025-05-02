@@ -35,14 +35,10 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            
-            // Don't use DontDestroyOnLoad to prevent memory leaks
-            // This is better managed through proper scene transitions
         }
         else if (Instance != this)
         {
             Destroy(gameObject);
-            return;
         }
     }
     
@@ -66,10 +62,10 @@ public class GameManager : MonoBehaviour
     {
         // Handle low memory situations
         Resources.UnloadUnusedAssets();
-        System.GC.Collect();
+        GC.Collect();
     }
     
-    public void StartNewGame(int width, int height)
+    private void StartNewGame(int width, int height)
     {
         if (width * height % 2 != 0)
         {
@@ -80,7 +76,6 @@ public class GameManager : MonoBehaviour
         gridWidth = width;
         gridHeight = height;
         
-        // Reset game state
         firstSelectedCard = null;
         secondSelectedCard = null;
         canSelectCard = true;
@@ -96,7 +91,6 @@ public class GameManager : MonoBehaviour
         // Calculate number of pairs
         remainingPairs = (width * height) / 2;
         
-        // Reset score
         scoreManager.ResetScore();
         
         // Prewarm layout calculation for the new grid size
@@ -112,7 +106,7 @@ public class GameManager : MonoBehaviour
         uiManager.ShowGameplayUI();
     }
     
-    public void SaveGame()
+    private void SaveGame()
     {
         if (!isGameActive) return;
 
@@ -154,7 +148,6 @@ public class GameManager : MonoBehaviour
                 checkMatchCoroutine = null;
             }
             
-            // Set score
             scoreManager.SetScore(gameData.Score);
             
             // Generate cards with saved state
@@ -162,7 +155,6 @@ public class GameManager : MonoBehaviour
             
             isGameActive = true;
             
-            // Update UI
             uiManager.UpdateMovesText(totalMoves);
             uiManager.ShowGameplayUI();
             
@@ -180,20 +172,15 @@ public class GameManager : MonoBehaviour
         if (!isGameActive || !canSelectCard || card.IsMatched || card.IsFlipped)
             return;
         
-        // Play flip sound
         audioManager.PlayCardFlip();
-        
-        // Flip the card
         card.Flip();
         
         if (firstSelectedCard == null)
         {
-            // This is the first card selected
             firstSelectedCard = card;
         }
         else if (secondSelectedCard == null && firstSelectedCard != card)
         {
-            // This is the second card selected
             secondSelectedCard = card;
             
             // Increment moves
@@ -201,25 +188,20 @@ public class GameManager : MonoBehaviour
             OnMoveMade?.Invoke(totalMoves);
             uiManager.UpdateMovesText(totalMoves);
             
-            // Check for match
             if (checkMatchCoroutine != null)
             {
                 StopCoroutine(checkMatchCoroutine);
             }
+            
             checkMatchCoroutine = StartCoroutine(CheckForMatch());
         }
     }
     
     private IEnumerator CheckForMatch()
     {
-        // Important: We don't disable card selection here to allow for continuous play
-        
         if (firstSelectedCard.CardValue == secondSelectedCard.CardValue)
         {
-            // Match found
             yield return new WaitForSeconds(matchDelay);
-            
-            // Play match sound
             audioManager.PlayCardMatch();
             
             // Mark cards as matched
@@ -238,10 +220,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // No match
             yield return new WaitForSeconds(mismatchDelay);
-            
-            // Play mismatch sound
             audioManager.PlayCardMismatch();
             
             // Flip cards back
@@ -259,13 +238,8 @@ public class GameManager : MonoBehaviour
     {
         isGameActive = false;
         
-        // Play game over sound
         audioManager.PlayGameOver();
-        
-        // Show game over UI
         uiManager.ShowGameOverUI(scoreManager.CurrentScore, totalMoves);
-        
-        // Clear save since game is complete
         SaveSystem.ClearSave();
         
         OnGameOver?.Invoke();
@@ -278,18 +252,18 @@ public class GameManager : MonoBehaviour
     
     public void QuitGame()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
     
     public void ChangeGridSize(int width, int height)
     {
         if (isGameActive)
         {
-            SaveGame(); // Save current game before changing grid
+            SaveGame();
         }
         
         StartNewGame(width, height);
@@ -323,11 +297,7 @@ public class GameManager : MonoBehaviour
     {
         // Clean up event subscriptions
         Application.lowMemory -= HandleLowMemory;
-        
-        // Stop all coroutines
         StopAllCoroutines();
-        
-        // Clear reference for GC
         Instance = null;
     }
 }
