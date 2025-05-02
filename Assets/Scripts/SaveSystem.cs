@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
@@ -8,7 +6,7 @@ public class SaveSystem : MonoBehaviour
 {
     private const string SAVE_FILENAME = "cardsave.json";
     private const string PREFS_KEY_HAS_SAVE = "HasCardGameSave";
-    
+
     public static void SaveGame(GameData gameData)
     {
         string json = JsonUtility.ToJson(gameData);
@@ -78,7 +76,7 @@ public class SaveSystem : MonoBehaviour
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class GameData
 {
     public int GridWidth;
@@ -87,4 +85,14 @@ public class GameData
     public int TotalMoves;
     public int Score;
     public CardState[] CardStates;
+    
+    // Value-to-sprite mapping record
+    public ValueToSpriteMapping[] SpriteMapping;
+}
+
+[Serializable]
+public class ValueToSpriteMapping
+{
+    public int Value;
+    public int SpriteIndex;
 }

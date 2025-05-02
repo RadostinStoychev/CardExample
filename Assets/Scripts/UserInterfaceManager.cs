@@ -79,7 +79,6 @@ public class UserInterfaceManager : MonoBehaviour
             }
             
             gridSizeDropdown.AddOptions(options);
-            gridSizeDropdown.onValueChanged.AddListener(ChangeGridSize);
         }
     }
     
@@ -155,12 +154,7 @@ public class UserInterfaceManager : MonoBehaviour
         gameManager.ChangeGridSize(gridSize.Item1, gridSize.Item2);
         HideMenuPanel();
     }
-    
-    private void ChangeGridSize(int index)
-    {
-        // This is just to store the selected value, actual change happens on new game
-    }
-    
+
     private void QuitGame()
     {
         gameManager.QuitGame();
@@ -181,7 +175,5 @@ public class UserInterfaceManager : MonoBehaviour
         if (menuButton != null) menuButton.onClick.RemoveListener(ShowMenuPanel);
         if (newGameButton != null) newGameButton.onClick.RemoveListener(StartNewGame);
         if (quitButton != null) quitButton.onClick.RemoveListener(QuitGame);
-        
-        if (gridSizeDropdown != null) gridSizeDropdown.onValueChanged.RemoveListener(ChangeGridSize);
     }
 }

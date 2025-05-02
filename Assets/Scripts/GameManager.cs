@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         // Load saved game or start new game
         if (SaveSystem.HasSavedGame())
         {
-            StartCoroutine(LoadGameAsync());
+            LoadGame();
         }
         else
         {
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
     public void SaveGame()
     {
         if (!isGameActive) return;
-        
+
         GameData gameData = new GameData
         {
             GridWidth = gridWidth,
@@ -123,34 +123,18 @@ public class GameManager : MonoBehaviour
             RemainingPairs = remainingPairs,
             TotalMoves = totalMoves,
             Score = scoreManager.CurrentScore,
-            CardStates = cardManager.GetCardStates()
+            CardStates = cardManager.GetCardStates(),
+            SpriteMapping = cardManager.GetSpriteMapping()
         };
         
         SaveSystem.SaveGame(gameData);
         Debug.Log("Game saved successfully");
     }
     
-    private IEnumerator LoadGameAsync()
+    private void LoadGame()
     {
-        // Show loading state if needed
-        // uiManager.ShowLoadingIndicator(true);
-        
-        GameData gameData = null;
-        
-        // Use a separate thread for loading data
-        var loadOperation = new System.Threading.Tasks.Task<GameData>(() => {
-            return SaveSystem.LoadGame();
-        });
-        
-        loadOperation.Start();
-        
-        while (!loadOperation.IsCompleted)
-        {
-            yield return null;
-        }
-        
-        gameData = loadOperation.Result;
-        
+        GameData gameData = SaveSystem.LoadGame();
+
         if (gameData != null)
         {
             gridWidth = gameData.GridWidth;
@@ -189,9 +173,6 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("No saved game found, starting new game");
             StartNewGame(gridWidth, gridHeight);
         }
-        
-        // Hide loading indicator
-        // uiManager.ShowLoadingIndicator(false);
     }
     
     public void SelectCard(Card card)

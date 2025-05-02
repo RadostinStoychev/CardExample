@@ -128,6 +128,20 @@ public class Card : MonoBehaviour
         // Start match animation
         matchCoroutine = StartCoroutine(MatchAnimation());
     }
+
+    public void SetMatchedOnStart()
+    {
+        isMatched = true;
+        isFlipped = true;
+        
+        // Disable button
+        cardButton.interactable = false;
+        
+        cardBack.gameObject.SetActive(false);
+        cardImage.gameObject.SetActive(true);
+        cardImage.color = new Color(cardImage.color.r, cardImage.color.g, cardImage.color.b, 0.5f);;
+        cardFace.localRotation = Quaternion.Euler(0f, isFlipped ? 0f : 180f, 0f);
+    }
     
     private IEnumerator MatchAnimation()
     {

@@ -8,6 +8,7 @@ public class CardState
     public int Value;
     public bool IsMatched;
     public bool IsFlipped;
+    public int SpriteIndex;
 }
 
 public class CardManager : MonoBehaviour
@@ -136,29 +137,44 @@ public class CardManager : MonoBehaviour
     {
         // Clear existing cards
         ReturnAllCardsToPool();
-        
+    
         // Calculate card size based on available space
         SetupGridLayout(width, height);
-        
+    
+        // Rebuild the valueToSpriteIndex dictionary from saved data
+        RebuildSpriteMapping(cardStates);
+    
         // Create the cards from saved states
         foreach (CardState cardState in cardStates)
         {
             Card card = GetCardFromPool();
-            SetupCard(card, cardState.Value);
-            
+        
+            // Set up card with saved sprite index
+            SetupCardFromState(card, cardState);
+        
             // Restore card state
             if (cardState.IsMatched)
             {
-                card.SetMatched();
+                card.SetMatchedOnStart();
             }
-            else if (cardState.IsFlipped)
-            {
-                card.Flip();
-            }
-            
+
             activeCards.Add(card);
         }
     }
+    
+    private void RebuildSpriteMapping(CardState[] cardStates)
+    {
+        valueToSpriteIndex.Clear();
+    
+        foreach (CardState state in cardStates)
+        {
+            if (!valueToSpriteIndex.ContainsKey(state.Value))
+            {
+                valueToSpriteIndex[state.Value] = state.SpriteIndex;
+            }
+        }
+    }
+
     
     private void SetupGridLayout(int width, int height)
     {
@@ -183,7 +199,7 @@ public class CardManager : MonoBehaviour
         {
             cardHeight = cardWidth / cardAspectRatio;
         }
-        
+
         // Set cell size and spacing
         gridLayout.cellSize = new Vector2(cardWidth, cardHeight);
         gridLayout.spacing = new Vector2(cardSpacing, cardSpacing);
@@ -196,6 +212,12 @@ public class CardManager : MonoBehaviour
         // Set card properties
         int spriteIndex = valueToSpriteIndex[value];
         card.Setup(value, cardImages[spriteIndex], cardBackSprite);
+    }
+    
+    private void SetupCardFromState(Card card, CardState state)
+    {
+        // Set card properties using the sprite index stored in the state
+        card.Setup(state.Value, cardImages[state.SpriteIndex], cardBackSprite);
     }
     
     private void AssignSpritesToValues(int numPairs)
@@ -238,22 +260,42 @@ public class CardManager : MonoBehaviour
             list[n] = value;
         }
     }
-    
+
     public CardState[] GetCardStates()
     {
         CardState[] cardStates = new CardState[activeCards.Count];
-        
+    
         for (int i = 0; i < activeCards.Count; i++)
         {
+            int value = activeCards[i].CardValue;
             cardStates[i] = new CardState
             {
-                Value = activeCards[i].CardValue,
+                Value = value,
                 IsMatched = activeCards[i].IsMatched,
-                IsFlipped = activeCards[i].IsFlipped
+                IsFlipped = activeCards[i].IsFlipped,
+                SpriteIndex = valueToSpriteIndex[value]
             };
         }
-        
+    
         return cardStates;
+    }
+    
+    public ValueToSpriteMapping[] GetSpriteMapping()
+    {
+        ValueToSpriteMapping[] mapping = new ValueToSpriteMapping[valueToSpriteIndex.Count];
+        int index = 0;
+    
+        foreach (var pair in valueToSpriteIndex)
+        {
+            mapping[index] = new ValueToSpriteMapping
+            {
+                Value = pair.Key,
+                SpriteIndex = pair.Value
+            };
+            index++;
+        }
+    
+        return mapping;
     }
     
     // Optimize loading of grid when changing layouts
