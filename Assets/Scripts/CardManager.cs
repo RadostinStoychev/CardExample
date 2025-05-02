@@ -14,7 +14,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private GridLayoutGroup gridLayout;
     [SerializeField] private RectTransform gridRectTransform;
     [SerializeField] private float cardAspectRatio = 0.7f;
-    [SerializeField] private float cardSpacing = 10f;
+    [SerializeField] private float cardSpacing = 5f;
     [SerializeField] private float edgePadding = 20f;
     
     [Header("Pool Settings")]
