@@ -108,7 +108,10 @@ public class GameManager : MonoBehaviour
     
     private void SaveGame()
     {
-        if (!isGameActive) return;
+        if (!isGameActive)
+        {
+            return;
+        }
 
         GameData gameData = new GameData
         {
@@ -170,7 +173,9 @@ public class GameManager : MonoBehaviour
     public void SelectCard(Card card)
     {
         if (!isGameActive || !canSelectCard || card.IsMatched || card.IsFlipped)
+        {
             return;
+        }
         
         audioManager.PlayCardFlip();
         card.Flip();
